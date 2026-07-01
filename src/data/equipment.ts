@@ -1,0 +1,347 @@
+import type { Equipment } from './types';
+import { getCityInfo } from './cities';
+
+function hashJitter(id: string): number {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 31 + id.charCodeAt(i)) | 0;
+  }
+  const positiveHash = hash >>> 0; // unsigned so the range below is symmetric
+  // spread items within ~1km of the city center so map markers don't overlap
+  return (positiveHash % 1000) / 1000 * 0.02 - 0.01;
+}
+
+function coords(city: string, id: string): { lat: number;lng: number } {
+  const info = getCityInfo(city);
+  const base = info ? { lat: info.lat, lng: info.lng } : { lat: 24.7136, lng: 46.6753 };
+  return { lat: base.lat + hashJitter(id), lng: base.lng + hashJitter(id + 'x') };
+}
+
+function build(
+item: Omit<Equipment, 'lat' | 'lng'>)
+: Equipment {
+  return { ...item, ...coords(item.city, item.id) };
+}
+
+export const EQUIPMENT_SEED: Equipment[] = [
+build({
+  id: 'eq-001',
+  title: 'رافعة تلسكوبية 50 طن للإيجار',
+  category: 'معدات الرفع',
+  serviceType: 'للإيجار',
+  region: 'المنطقة الشرقية',
+  city: 'الدمام',
+  year: '2024',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 1500,
+  description:
+  'رافعة تلسكوبية حديثة موديل 2024 بحالة ممتازة وجاهزة للعمل الفوري. تتميز بقدرة رفع تصل إلى 50 طن وارتفاع يصل إلى 40 متر. مناسبة لجميع المشاريع الإنشائية والصناعية. صيانة دورية معتمدة وتأمين شامل.',
+  companyId: 'co-001',
+  status: 'available',
+  createdAt: '2026-06-28T09:00:00.000Z'
+}),
+build({
+  id: 'eq-002',
+  title: 'سيزرلفت رافعة مقصية',
+  category: 'معدات الرفع',
+  serviceType: 'للإيجار',
+  region: 'الرياض',
+  city: 'الرياض',
+  year: '2025',
+  condition: 'جديد',
+  fuelType: 'كهرباء',
+  pricePerDay: 450,
+  description: 'رافعة مقصية كهربائية مناسبة للأعمال الداخلية وأعمال الصيانة في الارتفاعات المتوسطة.',
+  companyId: 'co-002',
+  status: 'available',
+  createdAt: '2026-06-29T09:00:00.000Z'
+}),
+build({
+  id: 'eq-003',
+  title: 'بوكلين كاتربيلر 320',
+  category: 'معدات الحفر',
+  serviceType: 'للإيجار',
+  region: 'مكة المكرمة',
+  city: 'جدة',
+  year: '2023',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 900,
+  description: 'حفارة كاتربيلر موديل 320 بحالة جيدة جداً، مناسبة لأعمال الحفر وردم الأساسات.',
+  companyId: 'co-003',
+  status: 'available-tomorrow',
+  createdAt: '2026-06-20T09:00:00.000Z'
+}),
+build({
+  id: 'eq-004',
+  title: 'رافعة شوكية تويوتا 3 طن',
+  category: 'معدات النقل',
+  serviceType: 'للإيجار',
+  region: 'المنطقة الشرقية',
+  city: 'الدمام',
+  year: '2024',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 350,
+  description: 'رافعة شوكية تويوتا بحمولة 3 طن، مثالية لأعمال المستودعات والمصانع.',
+  companyId: 'co-004',
+  status: 'available',
+  createdAt: '2026-06-25T09:00:00.000Z'
+}),
+build({
+  id: 'eq-005',
+  title: 'كرين موبايل 50 طن',
+  category: 'معدات الرفع',
+  serviceType: 'للإيجار',
+  region: 'الرياض',
+  city: 'الرياض',
+  year: '2025',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 1800,
+  description: 'كرين موبايل بقدرة رفع 50 طن، مزود بذراع طويل وجاهز للانتقال السريع بين المواقع.',
+  companyId: 'co-002',
+  status: 'available',
+  createdAt: '2026-06-30T09:00:00.000Z'
+}),
+build({
+  id: 'eq-006',
+  title: 'لودر كاتربيلر',
+  category: 'معدات التحميل',
+  serviceType: 'للإيجار',
+  region: 'مكة المكرمة',
+  city: 'مكة المكرمة',
+  year: '2024',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 600,
+  description: 'لودر كاتربيلر بحالة ممتازة، مناسب لأعمال التحميل والتفريغ في المواقع الإنشائية.',
+  companyId: 'co-005',
+  status: 'available',
+  createdAt: '2026-06-22T09:00:00.000Z'
+}),
+build({
+  id: 'eq-007',
+  title: 'جي سي بي حفار',
+  category: 'معدات الحفر',
+  serviceType: 'للإيجار',
+  region: 'المدينة المنورة',
+  city: 'المدينة المنورة',
+  year: '2023',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 500,
+  description: 'حفارة جي سي بي متعددة الاستخدامات، مناسبة لأعمال الحفر الصغيرة والمتوسطة.',
+  companyId: 'co-006',
+  status: 'reserved',
+  createdAt: '2026-06-18T09:00:00.000Z'
+}),
+build({
+  id: 'eq-008',
+  title: 'مان لفت 20 متر',
+  category: 'معدات الرفع',
+  serviceType: 'للإيجار',
+  region: 'المنطقة الشرقية',
+  city: 'الخبر',
+  year: '2025',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 700,
+  description: 'مان لفت بارتفاع 20 متر، مثالي لأعمال الصيانة الصناعية وتركيب اللوحات الإعلانية.',
+  companyId: 'co-007',
+  status: 'available',
+  createdAt: '2026-06-27T09:00:00.000Z'
+}),
+build({
+  id: 'eq-009',
+  title: 'رافعة شوكية 3 طن للإيجار اليومي',
+  category: 'معدات النقل',
+  serviceType: 'للإيجار',
+  region: 'المنطقة الشرقية',
+  city: 'الدمام',
+  year: '2024',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 320,
+  description: 'رافعة شوكية إضافية متاحة للإيجار اليومي أو الأسبوعي مع سائق أو بدون.',
+  companyId: 'co-004',
+  status: 'available',
+  createdAt: '2026-06-24T09:00:00.000Z'
+}),
+build({
+  id: 'eq-010',
+  title: 'بوبكات صغير متعدد الاستخدامات',
+  category: 'معدات التحميل',
+  serviceType: 'للإيجار',
+  region: 'مكة المكرمة',
+  city: 'مكة المكرمة',
+  year: '2024',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 400,
+  description: 'بوبكات صغير مناسب للمساحات الضيقة وأعمال التسوية والتحميل الخفيف.',
+  companyId: 'co-005',
+  status: 'available',
+  createdAt: '2026-06-26T09:00:00.000Z'
+}),
+build({
+  id: 'eq-011',
+  title: 'رصاصة أسفلت (مدحلة)',
+  category: 'معدات الطرق',
+  serviceType: 'للإيجار',
+  region: 'مكة المكرمة',
+  city: 'مكة المكرمة',
+  year: '2022',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 550,
+  description: 'مدحلة أسفلت لدك الطرق والأرصفة، بحالة تشغيلية جيدة.',
+  companyId: 'co-005',
+  status: 'reserved',
+  createdAt: '2026-06-15T09:00:00.000Z'
+}),
+build({
+  id: 'eq-012',
+  title: 'كرين برجي للإيجار طويل الأمد',
+  category: 'معدات الرفع',
+  serviceType: 'للإيجار',
+  region: 'الرياض',
+  city: 'الرياض',
+  year: '2025',
+  condition: 'جديد',
+  fuelType: 'كهرباء',
+  pricePerDay: 2200,
+  description: 'كرين برجي ثابت مناسب لمشاريع الأبراج والمباني متعددة الطوابق، يشمل التركيب والفك.',
+  companyId: 'co-002',
+  status: 'available-tomorrow',
+  createdAt: '2026-06-29T12:00:00.000Z'
+}),
+build({
+  id: 'eq-013',
+  title: 'حفارة صغيرة للأعمال المنزلية',
+  category: 'معدات الحفر',
+  serviceType: 'للإيجار',
+  region: 'مكة المكرمة',
+  city: 'جدة',
+  year: '2024',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 380,
+  description: 'حفارة صغيرة مناسبة لأعمال الحفر في المساحات الضيقة والمشاريع السكنية.',
+  companyId: 'co-003',
+  status: 'available',
+  createdAt: '2026-06-23T09:00:00.000Z'
+}),
+build({
+  id: 'eq-014',
+  title: 'شاحنة نقل معدات (فلات بد)',
+  category: 'معدات النقل',
+  serviceType: 'للإيجار',
+  region: 'المنطقة الشرقية',
+  city: 'الدمام',
+  year: '2023',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 650,
+  description: 'شاحنة فلات بد لنقل المعدات الثقيلة بين المواقع، سائق محترف متوفر.',
+  companyId: 'co-001',
+  status: 'available',
+  createdAt: '2026-06-21T09:00:00.000Z'
+}),
+build({
+  id: 'eq-015',
+  title: 'لودر صغير للإيجار بالساعة',
+  category: 'معدات التحميل',
+  serviceType: 'للإيجار',
+  region: 'المدينة المنورة',
+  city: 'المدينة المنورة',
+  year: '2022',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 300,
+  description: 'لودر صغير يمكن استئجاره بالساعة أو اليوم، مناسب للمشاريع الصغيرة.',
+  companyId: 'co-006',
+  status: 'available',
+  createdAt: '2026-06-19T09:00:00.000Z'
+}),
+build({
+  id: 'eq-016',
+  title: 'مفرشة أسفلت للطرق السريعة',
+  category: 'معدات الطرق',
+  serviceType: 'للإيجار',
+  region: 'الرياض',
+  city: 'الرياض',
+  year: '2024',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 1200,
+  description: 'مفرشة أسفلت حديثة لمشاريع رصف الطرق السريعة والداخلية.',
+  companyId: 'co-002',
+  status: 'available',
+  createdAt: '2026-06-30T14:00:00.000Z'
+}),
+build({
+  id: 'eq-017',
+  title: 'كرين متنقل 25 طن للبيع',
+  category: 'معدات الرفع',
+  serviceType: 'للبيع',
+  region: 'المنطقة الشرقية',
+  city: 'الخبر',
+  year: '2021',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 0,
+  description: 'كرين متنقل بحمولة 25 طن معروض للبيع، صيانة كاملة وسجل صيانة موثق.',
+  companyId: 'co-007',
+  status: 'available',
+  createdAt: '2026-06-17T09:00:00.000Z'
+}),
+build({
+  id: 'eq-018',
+  title: 'مطلوب حفارة للإيجار الشهري',
+  category: 'معدات الحفر',
+  serviceType: 'مطلوب للإيجار',
+  region: 'مكة المكرمة',
+  city: 'جدة',
+  year: '2020',
+  condition: 'مستعمل',
+  fuelType: 'ديزل',
+  pricePerDay: 0,
+  description: 'مطلوب حفارة متوسطة الحجم للإيجار الشهري لمشروع بنية تحتية في جدة.',
+  companyId: 'co-003',
+  status: 'available',
+  createdAt: '2026-06-16T09:00:00.000Z'
+}),
+build({
+  id: 'eq-019',
+  title: 'مان لفت كهربائي 12 متر',
+  category: 'معدات الرفع',
+  serviceType: 'للإيجار',
+  region: 'الرياض',
+  city: 'الرياض',
+  year: '2025',
+  condition: 'جديد',
+  fuelType: 'كهرباء',
+  pricePerDay: 400,
+  description: 'مان لفت كهربائي هادئ ومناسب للاستخدام الداخلي في المستودعات والمصانع.',
+  companyId: 'co-002',
+  status: 'available',
+  createdAt: '2026-06-29T15:00:00.000Z'
+}),
+build({
+  id: 'eq-020',
+  title: 'رافعة شوكية للبيع بحالة الوكالة',
+  category: 'معدات النقل',
+  serviceType: 'للبيع',
+  region: 'المنطقة الشرقية',
+  city: 'الدمام',
+  year: '2025',
+  condition: 'جديد',
+  fuelType: 'ديزل',
+  pricePerDay: 0,
+  description: 'رافعة شوكية جديدة بحالة الوكالة معروضة للبيع مع ضمان الوكيل.',
+  companyId: 'co-001',
+  status: 'available',
+  createdAt: '2026-06-30T18:00:00.000Z'
+})];

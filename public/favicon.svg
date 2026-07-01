@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1B1B2F"/>
+  <g fill="none" stroke="#D4A017" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <!-- cargo bed -->
+    <rect x="96" y="196" width="220" height="120" rx="10"/>
+    <!-- cab -->
+    <path d="M316 236 h64 l44 48 v52 h-108 z"/>
+    <!-- windshield -->
+    <path d="M336 250 h34 l24 26 h-58 z" fill="#1B1B2F" stroke-width="14"/>
+    <!-- chassis line -->
+    <path d="M70 316 h370"/>
+    <!-- wheels -->
+    <circle cx="176" cy="336" r="34" fill="#1B1B2F"/>
+    <circle cx="384" cy="336" r="34" fill="#1B1B2F"/>
+  </g>
+  <g fill="#D4A017">
+    <circle cx="176" cy="336" r="16"/>
+    <circle cx="384" cy="336" r="16"/>
+  </g>
+</svg>
