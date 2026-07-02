@@ -152,7 +152,7 @@ export function PostListing() {
       companyId: company.id,
       status: 'available',
       createdAt: new Date().toISOString(),
-      imageDataUrl
+      image: imageDataUrl
     };
     addUserListing(equipment);
     notifications.show({ message: 'تم نشر الإعلان بنجاح', color: 'green' });

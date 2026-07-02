@@ -1,6 +1,10 @@
 import type { Equipment } from './types';
 import { getCityInfo } from './cities';
 
+function img(slug: string): string {
+  return `/images/equipment/${slug}.jpg`;
+}
+
 function hashJitter(id: string): number {
   let hash = 0;
   for (let i = 0; i < id.length; i++) {
@@ -39,7 +43,8 @@ build({
   'رافعة تلسكوبية حديثة موديل 2024 بحالة ممتازة وجاهزة للعمل الفوري. تتميز بقدرة رفع تصل إلى 50 طن وارتفاع يصل إلى 40 متر. مناسبة لجميع المشاريع الإنشائية والصناعية. صيانة دورية معتمدة وتأمين شامل.',
   companyId: 'co-001',
   status: 'available',
-  createdAt: '2026-06-28T09:00:00.000Z'
+  createdAt: '2026-06-28T09:00:00.000Z',
+  image: img('telescopic-crane')
 }),
 build({
   id: 'eq-002',
@@ -55,7 +60,8 @@ build({
   description: 'رافعة مقصية كهربائية مناسبة للأعمال الداخلية وأعمال الصيانة في الارتفاعات المتوسطة.',
   companyId: 'co-002',
   status: 'available',
-  createdAt: '2026-06-29T09:00:00.000Z'
+  createdAt: '2026-06-29T09:00:00.000Z',
+  image: img('scissor-lift')
 }),
 build({
   id: 'eq-003',
@@ -71,7 +77,8 @@ build({
   description: 'حفارة كاتربيلر موديل 320 بحالة جيدة جداً، مناسبة لأعمال الحفر وردم الأساسات.',
   companyId: 'co-003',
   status: 'available-tomorrow',
-  createdAt: '2026-06-20T09:00:00.000Z'
+  createdAt: '2026-06-20T09:00:00.000Z',
+  image: img('excavator')
 }),
 build({
   id: 'eq-004',
@@ -87,7 +94,8 @@ build({
   description: 'رافعة شوكية تويوتا بحمولة 3 طن، مثالية لأعمال المستودعات والمصانع.',
   companyId: 'co-004',
   status: 'available',
-  createdAt: '2026-06-25T09:00:00.000Z'
+  createdAt: '2026-06-25T09:00:00.000Z',
+  image: img('forklift')
 }),
 build({
   id: 'eq-005',
@@ -103,7 +111,8 @@ build({
   description: 'كرين موبايل بقدرة رفع 50 طن، مزود بذراع طويل وجاهز للانتقال السريع بين المواقع.',
   companyId: 'co-002',
   status: 'available',
-  createdAt: '2026-06-30T09:00:00.000Z'
+  createdAt: '2026-06-30T09:00:00.000Z',
+  image: img('mobile-crane')
 }),
 build({
   id: 'eq-006',
@@ -119,7 +128,8 @@ build({
   description: 'لودر كاتربيلر بحالة ممتازة، مناسب لأعمال التحميل والتفريغ في المواقع الإنشائية.',
   companyId: 'co-005',
   status: 'available',
-  createdAt: '2026-06-22T09:00:00.000Z'
+  createdAt: '2026-06-22T09:00:00.000Z',
+  image: img('wheel-loader')
 }),
 build({
   id: 'eq-007',
@@ -135,7 +145,8 @@ build({
   description: 'حفارة جي سي بي متعددة الاستخدامات، مناسبة لأعمال الحفر الصغيرة والمتوسطة.',
   companyId: 'co-006',
   status: 'reserved',
-  createdAt: '2026-06-18T09:00:00.000Z'
+  createdAt: '2026-06-18T09:00:00.000Z',
+  image: img('backhoe-loader')
 }),
 build({
   id: 'eq-008',
@@ -151,7 +162,8 @@ build({
   description: 'مان لفت بارتفاع 20 متر، مثالي لأعمال الصيانة الصناعية وتركيب اللوحات الإعلانية.',
   companyId: 'co-007',
   status: 'available',
-  createdAt: '2026-06-27T09:00:00.000Z'
+  createdAt: '2026-06-27T09:00:00.000Z',
+  image: img('boom-lift')
 }),
 build({
   id: 'eq-009',
@@ -167,7 +179,8 @@ build({
   description: 'رافعة شوكية إضافية متاحة للإيجار اليومي أو الأسبوعي مع سائق أو بدون.',
   companyId: 'co-004',
   status: 'available',
-  createdAt: '2026-06-24T09:00:00.000Z'
+  createdAt: '2026-06-24T09:00:00.000Z',
+  image: img('forklift')
 }),
 build({
   id: 'eq-010',
@@ -183,7 +196,8 @@ build({
   description: 'بوبكات صغير مناسب للمساحات الضيقة وأعمال التسوية والتحميل الخفيف.',
   companyId: 'co-005',
   status: 'available',
-  createdAt: '2026-06-26T09:00:00.000Z'
+  createdAt: '2026-06-26T09:00:00.000Z',
+  image: img('skid-steer')
 }),
 build({
   id: 'eq-011',
@@ -199,7 +213,8 @@ build({
   description: 'مدحلة أسفلت لدك الطرق والأرصفة، بحالة تشغيلية جيدة.',
   companyId: 'co-005',
   status: 'reserved',
-  createdAt: '2026-06-15T09:00:00.000Z'
+  createdAt: '2026-06-15T09:00:00.000Z',
+  image: img('road-roller')
 }),
 build({
   id: 'eq-012',
@@ -215,7 +230,8 @@ build({
   description: 'كرين برجي ثابت مناسب لمشاريع الأبراج والمباني متعددة الطوابق، يشمل التركيب والفك.',
   companyId: 'co-002',
   status: 'available-tomorrow',
-  createdAt: '2026-06-29T12:00:00.000Z'
+  createdAt: '2026-06-29T12:00:00.000Z',
+  image: img('tower-crane')
 }),
 build({
   id: 'eq-013',
@@ -231,7 +247,8 @@ build({
   description: 'حفارة صغيرة مناسبة لأعمال الحفر في المساحات الضيقة والمشاريع السكنية.',
   companyId: 'co-003',
   status: 'available',
-  createdAt: '2026-06-23T09:00:00.000Z'
+  createdAt: '2026-06-23T09:00:00.000Z',
+  image: img('mini-excavator')
 }),
 build({
   id: 'eq-014',
@@ -247,7 +264,8 @@ build({
   description: 'شاحنة فلات بد لنقل المعدات الثقيلة بين المواقع، سائق محترف متوفر.',
   companyId: 'co-001',
   status: 'available',
-  createdAt: '2026-06-21T09:00:00.000Z'
+  createdAt: '2026-06-21T09:00:00.000Z',
+  image: img('flatbed-truck')
 }),
 build({
   id: 'eq-015',
@@ -263,7 +281,8 @@ build({
   description: 'لودر صغير يمكن استئجاره بالساعة أو اليوم، مناسب للمشاريع الصغيرة.',
   companyId: 'co-006',
   status: 'available',
-  createdAt: '2026-06-19T09:00:00.000Z'
+  createdAt: '2026-06-19T09:00:00.000Z',
+  image: img('skid-steer')
 }),
 build({
   id: 'eq-016',
@@ -279,7 +298,8 @@ build({
   description: 'مفرشة أسفلت حديثة لمشاريع رصف الطرق السريعة والداخلية.',
   companyId: 'co-002',
   status: 'available',
-  createdAt: '2026-06-30T14:00:00.000Z'
+  createdAt: '2026-06-30T14:00:00.000Z',
+  image: img('asphalt-paver')
 }),
 build({
   id: 'eq-017',
@@ -295,7 +315,8 @@ build({
   description: 'كرين متنقل بحمولة 25 طن معروض للبيع، صيانة كاملة وسجل صيانة موثق.',
   companyId: 'co-007',
   status: 'available',
-  createdAt: '2026-06-17T09:00:00.000Z'
+  createdAt: '2026-06-17T09:00:00.000Z',
+  image: img('mobile-crane')
 }),
 build({
   id: 'eq-018',
@@ -311,7 +332,8 @@ build({
   description: 'مطلوب حفارة متوسطة الحجم للإيجار الشهري لمشروع بنية تحتية في جدة.',
   companyId: 'co-003',
   status: 'available',
-  createdAt: '2026-06-16T09:00:00.000Z'
+  createdAt: '2026-06-16T09:00:00.000Z',
+  image: img('excavator')
 }),
 build({
   id: 'eq-019',
@@ -327,7 +349,8 @@ build({
   description: 'مان لفت كهربائي هادئ ومناسب للاستخدام الداخلي في المستودعات والمصانع.',
   companyId: 'co-002',
   status: 'available',
-  createdAt: '2026-06-29T15:00:00.000Z'
+  createdAt: '2026-06-29T15:00:00.000Z',
+  image: img('boom-lift')
 }),
 build({
   id: 'eq-020',
@@ -343,5 +366,6 @@ build({
   description: 'رافعة شوكية جديدة بحالة الوكالة معروضة للبيع مع ضمان الوكيل.',
   companyId: 'co-001',
   status: 'available',
-  createdAt: '2026-06-30T18:00:00.000Z'
+  createdAt: '2026-06-30T18:00:00.000Z',
+  image: img('forklift')
 })];

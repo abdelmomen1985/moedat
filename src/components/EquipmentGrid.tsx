@@ -71,7 +71,7 @@ export function EquipmentGrid({
             year={item.year}
             condition={item.condition}
             serviceType={item.serviceType}
-            imageDataUrl={item.imageDataUrl} />
+            image={item.image} />
 
           )}
           </SimpleGrid>

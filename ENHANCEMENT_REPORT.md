@@ -6,6 +6,12 @@ The project started as a [Magic Patterns](https://magicpatterns.com)-generated v
 
 This pass turned it into a fully-interactive frontend prototype: real routing, a shared mock-data layer, working search/filter/favorites/contact actions, new pages the nav already referenced but didn't lead anywhere, a real interactive map with geolocation, and a working installable PWA — all frontend-only (localStorage-backed mock persistence, no real backend), while preserving the existing Mantine gold/navy visual identity, Cairo font, and RTL layout.
 
+## Update: real equipment photos
+
+Every equipment listing previously showed a flat navy gradient with a generic truck icon — recognizable as a placeholder even at a glance. All 20 seed listings now show a real, category-matched photo (telescopic crane, scissor lift, excavator, forklift, mobile crane, wheel loader, backhoe loader, boom lift, skid steer, road roller, tower crane, mini excavator, flatbed truck, asphalt paver), sourced from Wikimedia Commons via `scripts/fetch-equipment-images.mjs` (a one-off script, same pattern as the PWA icon generator) and downscaled/compressed with `sharp` to ~900×600 JPEGs (1.9MB total for all 14 photos). Licenses/authors are recorded in `public/images/equipment/ATTRIBUTIONS.md`.
+
+The `Equipment.imageDataUrl` field was renamed to `Equipment.image` (in `src/data/types.ts` and everywhere it's consumed) since it now holds either a static asset path (seed data) or a user-uploaded data URL (`/post-listing`) — the old name was misleading once it wasn't always a data URL. `EquipmentCard` and `EquipmentDetails` fall back to the original gradient+icon placeholder whenever `image` is absent, so user-submitted listings without a photo still render correctly.
+
 ## What changed, by area
 
 ### Dependencies added

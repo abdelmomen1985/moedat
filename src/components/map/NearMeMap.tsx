@@ -19,7 +19,24 @@ function createDivIcon(color: string, size: number) {
   });
 }
 
-const equipmentIcon = createDivIcon('#D4A017', 28);
+function createEquipmentIcon(imageUrl: string): L.DivIcon {
+  const size = 40;
+  return L.divIcon({
+    html: `<div style="
+      width:${size}px;height:${size}px;border-radius:50%;overflow:hidden;
+      box-shadow:0 2px 8px rgba(0,0,0,0.4);border:2px solid #D4A017;
+      background:#2C2C3E;
+    ">
+      <img src="${imageUrl}" alt="" style="
+        width:100%;height:100%;object-fit:cover;display:block;
+      " onerror="this.parentElement.style.background='#2C2C3E';this.style.display='none'" />
+    </div>`,
+    className: '',
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2]
+  });
+}
+
 const userIcon = createDivIcon('#2563EB', 20);
 
 interface NearMeMapProps {
@@ -48,9 +65,27 @@ export function NearMeMap({ center, userLocation, items }: NearMeMapProps) {
       }
 
       {items.map((item) =>
-      <Marker key={item.id} position={[item.lat, item.lng]} icon={equipmentIcon}>
+      <Marker key={item.id} position={[item.lat, item.lng]} icon={createEquipmentIcon(item.image)}>
           <Popup>
-            <Text fw={700} size="sm" mb={4}>{item.title}</Text>
+            <div style={{ width: 180 }}>
+              <img
+                src={item.image}
+                alt={item.title}
+                style={{
+                  width: '100%',
+                  height: 100,
+                  objectFit: 'cover',
+                  borderRadius: 6,
+                  marginBottom: 8,
+                  display: 'block'
+                }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              <Text fw={700} size="sm" mb={2}>{item.title}</Text>
+              <Text size="xs" c="dimmed" mb={8}>{item.category}</Text>
+            </div>
             <Button
             component={Link}
             to={`/equipment/${item.id}`}

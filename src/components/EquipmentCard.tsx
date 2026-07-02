@@ -27,7 +27,7 @@ interface EquipmentCardProps {
   year: string;
   condition?: string;
   serviceType?: string;
-  imageDataUrl?: string;
+  image?: string;
 }
 export function EquipmentCard({
   id,
@@ -37,7 +37,7 @@ export function EquipmentCard({
   year,
   condition = 'جديد',
   serviceType = 'للإيجار',
-  imageDataUrl
+  image
 }: EquipmentCardProps) {
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -70,7 +70,7 @@ export function EquipmentCard({
         <Box
           h={200}
           bg={
-          imageDataUrl ?
+          image ?
           undefined :
           'linear-gradient(135deg, #2C2C3E 0%, #1B1B2F 100%)'
           }
@@ -78,12 +78,12 @@ export function EquipmentCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundImage: imageDataUrl ? `url(${imageDataUrl})` : undefined,
+            backgroundImage: image ? `url(${image})` : undefined,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}>
 
-          {!imageDataUrl && <TruckIcon size={64} color="rgba(255,255,255,0.2)" />}
+          {!image && <TruckIcon size={64} color="rgba(255,255,255,0.2)" />}
         </Box>
         <Badge
           color="brand.5"

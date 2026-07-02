@@ -36,12 +36,12 @@ export function EquipmentResults() {
 
   return (
     <Box style={{ flex: 1 }} bg="#F8F9FA">
-      <Box bg="#1B1B2F" py={50}>
+      <Box bg="#1B1B2F" pt={50} pb={80}>
         <Container size="xl">
           <Title order={1} c="white" fw={800} mb="xs">
             جميع الإعلانات
           </Title>
-          <Text c="gray.4">تصفح جميع إعلانات المعدات المتاحة وابحث حسب احتياجك</Text>
+          <Text c="gray.3">تصفح جميع إعلانات المعدات المتاحة وابحث حسب احتياجك</Text>
         </Container>
       </Box>
       <SearchSection initialValues={values} onSearch={handleSearch} floating />

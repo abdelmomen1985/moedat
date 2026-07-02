@@ -32,7 +32,7 @@ export interface Equipment {
   companyId: string;
   status: EquipmentStatus;
   createdAt: string;
-  imageDataUrl?: string;
+  image?: string;
 }
 
 export interface Company {

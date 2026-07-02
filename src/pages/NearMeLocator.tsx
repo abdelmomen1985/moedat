@@ -20,7 +20,6 @@ import {
   MapPinIcon,
   SearchIcon,
   NavigationIcon,
-  TruckIcon,
   ChevronRightIcon,
   AlertCircleIcon } from
 'lucide-react';
@@ -196,16 +195,29 @@ export function NearMeLocator() {
                     w={80}
                     h={80}
                     radius="md"
-                    bg="#2C2C3E"
                     style={{
                       borderRadius: 8,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      overflow: 'hidden',
                       flexShrink: 0
                     }}>
 
-                      <TruckIcon size={32} color="rgba(255,255,255,0.2)" />
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block'
+                        }}
+                        onError={(e) => {
+                          const t = e.currentTarget;
+                          t.style.display = 'none';
+                          if (t.parentElement) {
+                            t.parentElement.style.background = '#2C2C3E';
+                          }
+                        }}
+                      />
                     </Box>
                     <Box
                     style={{

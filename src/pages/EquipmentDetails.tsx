@@ -142,7 +142,7 @@ export function EquipmentDetails() {
                   md: 450
                 }}
                 bg={
-                equipment.imageDataUrl ?
+                equipment.image ?
                 undefined :
                 'linear-gradient(135deg, #2C2C3E 0%, #1B1B2F 100%)'
                 }
@@ -151,14 +151,14 @@ export function EquipmentDetails() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   position: 'relative',
-                  backgroundImage: equipment.imageDataUrl ?
-                  `url(${equipment.imageDataUrl})` :
+                  backgroundImage: equipment.image ?
+                  `url(${equipment.image})` :
                   undefined,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }}>
 
-                {!equipment.imageDataUrl && <TruckIcon size={120} color="rgba(255,255,255,0.1)" />}
+                {!equipment.image && <TruckIcon size={120} color="rgba(255,255,255,0.1)" />}
                 <Badge
                   color="brand.5"
                   size="xl"
