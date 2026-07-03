@@ -6,10 +6,12 @@ import { EquipmentGrid } from '../components/EquipmentGrid';
 import { FeaturesSection } from '../components/FeaturesSection';
 import { getAllEquipment } from '../data/repository';
 import { buildSearchParams, SearchValues } from '../utils/searchParams';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function Home() {
   const navigate = useNavigate();
   const featured = getAllEquipment().slice(0, 8);
+  useDocumentTitle('الرئيسية');
 
   const handleSearch = (values: SearchValues) => {
     navigate(`/equipment?${buildSearchParams(values).toString()}`);

@@ -3,9 +3,11 @@ import { Box, Container, Title, Text } from '@mantine/core';
 import { EquipmentGrid } from '../components/EquipmentGrid';
 import { getAllEquipment } from '../data/repository';
 import { useFavorites } from '../hooks/useFavorites';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function Favorites() {
   const { favorites } = useFavorites();
+  useDocumentTitle('المفضلة');
   const items = getAllEquipment().filter((item) => favorites.includes(item.id));
 
   return (

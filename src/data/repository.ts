@@ -1,6 +1,7 @@
 import type { Company, Equipment } from './types';
 import { EQUIPMENT_SEED } from './equipment';
 import { COMPANIES_SEED } from './companies';
+import { generateId } from '../utils/id';
 
 const LISTINGS_KEY = 'almoedat-user-listings';
 const COMPANIES_KEY = 'almoedat-user-companies';
@@ -14,8 +15,13 @@ function readJson<T>(key: string, fallback: T): T {
   }
 }
 
-function writeJson<T>(key: string, value: T): void {
-  localStorage.setItem(key, JSON.stringify(value));
+function writeJson<T>(key: string, value: T): boolean {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function getUserListings(): Equipment[] {
@@ -75,7 +81,7 @@ export function getOrCreateCompanyForUser(user: {
   }
 
   const company: Company = {
-    id: `co-${crypto.randomUUID()}`,
+    id: `co-${generateId()}`,
     name: user.name,
     verified: false,
     region: 'الرياض',

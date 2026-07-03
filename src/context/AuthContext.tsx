@@ -1,6 +1,10 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useLocalStorage } from '@mantine/hooks';
+import { generateId } from '../utils/id';
 
+// ⚠️  MOCK AUTH — plaintext passwords, localStorage-only.
+// This is a placeholder for a real backend auth flow (JWT, bcrypt, etc.).
+// Do NOT copy this pattern into production code.
 interface MockUser {
   id: string;
   name: string;
@@ -9,7 +13,7 @@ interface MockUser {
   password: string;
 }
 
-interface AuthSession {
+export interface AuthSession {
   id: string;
   name: string;
   email: string;
@@ -27,6 +31,7 @@ interface AuthContextValue {
   password: string)
   => {ok: true;} | {ok: false;error: string;};
   logout: () => void;
+  updateProfile: (data: { name?: string; phone?: string }) => void;
   authModalOpened: boolean;
   authModalMode: 'login' | 'signup';
   openAuthModal: (mode?: 'login' | 'signup') => void;
@@ -38,10 +43,18 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 const USERS_KEY = 'almoedat-mock-users';
 const SESSION_KEY = 'almoedat-auth-session';
 
+const DEMO_USER: MockUser = {
+  id: 'user-demo-001',
+  name: 'مستخدم تجريبي',
+  email: 'demo@almoedat.com',
+  phone: '0500000000',
+  password: '123456'
+};
+
 export function AuthProvider({ children }: {children: React.ReactNode;}) {
   const [users, setUsers] = useLocalStorage<MockUser[]>({
     key: USERS_KEY,
-    defaultValue: []
+    defaultValue: [DEMO_USER]
   });
   const [session, setSession] = useLocalStorage<AuthSession | null>({
     key: SESSION_KEY,
@@ -49,6 +62,16 @@ export function AuthProvider({ children }: {children: React.ReactNode;}) {
   });
   const [authModalOpened, setAuthModalOpened] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'signup'>('login');
+
+  // Ensure demo user always exists
+  useEffect(() => {
+    setUsers((current) => {
+      if (current.some((u) => u.email === DEMO_USER.email)) {
+        return current;
+      }
+      return [DEMO_USER, ...current];
+    });
+  }, []);
 
   const login: AuthContextValue['login'] = (email, password) => {
     const found = users.find((u) => u.email === email && u.password === password);
@@ -64,7 +87,7 @@ export function AuthProvider({ children }: {children: React.ReactNode;}) {
       return { ok: false, error: 'يوجد حساب مسجل بهذا البريد الإلكتروني بالفعل' };
     }
     const newUser: MockUser = {
-      id: `user-${crypto.randomUUID()}`,
+      id: `user-${generateId()}`,
       name,
       email,
       phone,
@@ -76,6 +99,15 @@ export function AuthProvider({ children }: {children: React.ReactNode;}) {
   };
 
   const logout = () => setSession(null);
+
+  const updateProfile: AuthContextValue['updateProfile'] = (data) => {
+    if (!session) return;
+    const updated: AuthSession = { ...session, ...data };
+    setSession(updated);
+    setUsers((current) =>
+      current.map((u) => (u.id === session.id ? { ...u, ...data } : u))
+    );
+  };
 
   const openAuthModal = (mode: 'login' | 'signup' = 'login') => {
     setAuthModalMode(mode);
@@ -91,6 +123,7 @@ export function AuthProvider({ children }: {children: React.ReactNode;}) {
         login,
         signup,
         logout,
+        updateProfile,
         authModalOpened,
         authModalMode,
         openAuthModal,

@@ -4,10 +4,12 @@ import { SearchIcon, MapPinIcon } from 'lucide-react';
 import { CompanyCard } from '../components/CompanyCard';
 import { getAllCompanies } from '../data/repository';
 import { getRegions } from '../data/cities';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function CompanyDirectory() {
   const [keyword, setKeyword] = useState('');
   const [region, setRegion] = useState<string | null>(null);
+  useDocumentTitle('دليل الشركات');
 
   const companies = useMemo(() => {
     return getAllCompanies().filter((company) => {

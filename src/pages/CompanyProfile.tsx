@@ -5,6 +5,7 @@ import { ShieldCheckIcon, MapPinIcon, PhoneIcon, ChevronRightIcon } from 'lucide
 import { getCompanyById, getEquipmentByCompanyId } from '../data/repository';
 import { EquipmentGrid } from '../components/EquipmentGrid';
 import { usePaginatedList } from '../hooks/usePaginatedList';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function CompanyProfile() {
   const { id } = useParams<{id: string;}>();
@@ -12,6 +13,7 @@ export function CompanyProfile() {
   const company = id ? getCompanyById(id) : undefined;
   const listings = id ? getEquipmentByCompanyId(id) : [];
   const { visibleItems, hasMore, loadMore } = usePaginatedList(listings, 8);
+  useDocumentTitle(company?.name || 'ملف الشركة');
 
   if (!company) {
     return (

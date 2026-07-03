@@ -34,7 +34,7 @@ export function Header() {
       component="header"
       pos="sticky"
       top={0}
-      bg="#1B1B2F"
+      bg="dark.8"
       style={{
         zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
@@ -80,7 +80,7 @@ export function Header() {
               style={{
                 transition: 'color 0.2s'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.color = '#D4A017'}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--mantine-color-brand-5)'}
               onMouseLeave={(e) =>
               e.currentTarget.style.color = 'var(--mantine-color-gray-3)'
               }>
@@ -111,13 +111,19 @@ export function Header() {
                   color="brand.5"
                   radius="md"
                   fw={600}
-                  leftSection={<Avatar size={20} radius="xl" color="dark">{user?.name.charAt(0)}</Avatar>}
+                  leftSection={<Avatar size={20} radius="xl" color="dark">{user?.name.charAt(0) || '?'}</Avatar>}
                   rightSection={<ChevronDownIcon size={14} />}>
 
                     {user?.name.split(' ')[0]}
                   </Button>
                 </Menu.Target>
                 <Menu.Dropdown dir="rtl">
+                  <Menu.Item
+                  leftSection={<UserIcon size={16} />}
+                  onClick={() => navigate('/profile')}>
+
+                    الملف الشخصي
+                  </Menu.Item>
                   <Menu.Item
                   leftSection={<ListIcon size={16} />}
                   onClick={() => navigate('/post-listing')}>
@@ -172,7 +178,7 @@ export function Header() {
         size="100%"
         padding="md"
         title={
-        <Text size="xl" fw={800} c="#1B1B2F">
+        <Text size="xl" fw={800} c="dark.8">
             المعدات
           </Text>
         }
@@ -188,7 +194,7 @@ export function Header() {
             component={Link}
             to={item.to}
             onClick={() => setDrawerOpened(false)}
-            c="#1B1B2F"
+            c="dark.8"
             fw={600}
             size="lg"
             underline="never"
@@ -211,7 +217,51 @@ export function Header() {
             المعدات بالقرب مني
           </Button>
           {isAuthenticated ?
-          <Button
+          <>
+            <Button
+            variant="light"
+            color="brand.5"
+            radius="md"
+            size="lg"
+            mt="sm"
+            leftSection={<UserIcon size={18} />}
+            onClick={() => {
+              navigate('/profile');
+              setDrawerOpened(false);
+            }}
+            fullWidth>
+
+              الملف الشخصي
+            </Button>
+            <Button
+            variant="light"
+            color="brand.5"
+            radius="md"
+            size="lg"
+            leftSection={<ListIcon size={18} />}
+            onClick={() => {
+              navigate('/post-listing');
+              setDrawerOpened(false);
+            }}
+            fullWidth>
+
+              إعلاناتي
+            </Button>
+            <Button
+            variant="light"
+            color="brand.5"
+            radius="md"
+            size="lg"
+            leftSection={<HeartIcon size={18} />}
+            onClick={() => {
+              navigate('/favorites');
+              setDrawerOpened(false);
+            }}
+            fullWidth>
+
+              المفضلة
+            </Button>
+            <Button
             variant="filled"
             color="red"
             radius="md"
@@ -225,7 +275,8 @@ export function Header() {
             fullWidth>
 
               تسجيل الخروج
-            </Button> :
+            </Button>
+          </> :
 
           <Button
             variant="filled"

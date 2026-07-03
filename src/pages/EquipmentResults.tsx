@@ -6,10 +6,12 @@ import { EquipmentGrid } from '../components/EquipmentGrid';
 import { getAllEquipment } from '../data/repository';
 import { usePaginatedList } from '../hooks/usePaginatedList';
 import { buildSearchParams, parseSearchParams, SearchValues } from '../utils/searchParams';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function EquipmentResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const values = parseSearchParams(searchParams);
+  useDocumentTitle('نتائج البحث');
 
   const filtered = useMemo(() => {
     const all = getAllEquipment();

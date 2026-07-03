@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Container, Title, Text, SimpleGrid, Card, Badge, List, Button, ThemeIcon } from '@mantine/core';
 import { CheckIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 interface Tier {
   name: string;
@@ -46,6 +47,7 @@ const TIERS: Tier[] = [
 export function Pricing() {
   const navigate = useNavigate();
   const { isAuthenticated, openAuthModal } = useAuth();
+  useDocumentTitle('الأسعار');
 
   const handleSelect = () => {
     if (isAuthenticated) {

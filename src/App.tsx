@@ -1,25 +1,37 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { MantineProvider, createTheme } from '@mantine/core';
+import { MantineProvider, createTheme, Center, Loader } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { InstallPrompt } from './components/InstallPrompt';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { UpdatePrompt } from './components/UpdatePrompt';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from './context/AuthContext';
 import { AuthModal } from './components/auth/AuthModal';
-import { Home } from './pages/Home';
-import { EquipmentResults } from './pages/EquipmentResults';
-import { EquipmentDetails } from './pages/EquipmentDetails';
-import { NearMeLocator } from './pages/NearMeLocator';
-import { CompanyDirectory } from './pages/CompanyDirectory';
-import { CompanyProfile } from './pages/CompanyProfile';
-import { Pricing } from './pages/Pricing';
-import { PostListing } from './pages/PostListing';
-import { Favorites } from './pages/Favorites';
-import { About } from './pages/About';
-import { NotFound } from './pages/NotFound';
+
+// Lazy-loaded pages — only downloaded when the user navigates to them
+const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
+const EquipmentResults = lazy(() => import('./pages/EquipmentResults').then(m => ({ default: m.EquipmentResults })));
+const EquipmentDetails = lazy(() => import('./pages/EquipmentDetails').then(m => ({ default: m.EquipmentDetails })));
+const NearMeLocator = lazy(() => import('./pages/NearMeLocator').then(m => ({ default: m.NearMeLocator })));
+const CompanyDirectory = lazy(() => import('./pages/CompanyDirectory').then(m => ({ default: m.CompanyDirectory })));
+const CompanyProfile = lazy(() => import('./pages/CompanyProfile').then(m => ({ default: m.CompanyProfile })));
+const Pricing = lazy(() => import('./pages/Pricing').then(m => ({ default: m.Pricing })));
+const PostListing = lazy(() => import('./pages/PostListing').then(m => ({ default: m.PostListing })));
+const Favorites = lazy(() => import('./pages/Favorites').then(m => ({ default: m.Favorites })));
+const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
+const Profile = lazy(() => import('./pages/Profile').then(m => ({ default: m.Profile })));
+const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })));
+
+function PageLoader() {
+  return (
+    <Center mih="50vh">
+      <Loader color="brand.5" size="lg" />
+    </Center>
+  );
+}
 
 // Create a custom theme with the requested colors and typography
 const theme = createTheme({
@@ -75,19 +87,24 @@ function AppLayout() {
           flexDirection: 'column'
         }}>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/equipment" element={<EquipmentResults />} />
-          <Route path="/equipment/:id" element={<EquipmentDetails />} />
-          <Route path="/locator" element={<NearMeLocator />} />
-          <Route path="/companies" element={<CompanyDirectory />} />
-          <Route path="/companies/:id" element={<CompanyProfile />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/post-listing" element={<PostListing />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <ErrorBoundary>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/equipment" element={<EquipmentResults />} />
+              <Route path="/equipment/:id" element={<EquipmentDetails />} />
+              <Route path="/locator" element={<NearMeLocator />} />
+              <Route path="/companies" element={<CompanyDirectory />} />
+              <Route path="/companies/:id" element={<CompanyProfile />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/post-listing" element={<PostListing />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </main>
 
       {!isLocatorPage && <Footer />}

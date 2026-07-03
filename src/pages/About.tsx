@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Container, Title, Text, SimpleGrid, Card, ThemeIcon } from '@mantine/core';
 import { TargetIcon, EyeIcon, HeartHandshakeIcon } from 'lucide-react';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const VALUES = [
 {
@@ -21,6 +22,7 @@ const VALUES = [
 
 
 export function About() {
+  useDocumentTitle('عن المعدات');
   return (
     <Box style={{ flex: 1 }} bg="#F8F9FA">
       <Box bg="#1B1B2F" py={60}>

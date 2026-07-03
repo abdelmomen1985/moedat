@@ -28,6 +28,7 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { getAllEquipment } from '../data/repository';
 import { haversineDistanceKm, formatDistance } from '../utils/geo';
 import { getCityInfo } from '../data/cities';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const RIYADH_FALLBACK = getCityInfo('الرياض') ?? { lat: 24.7136, lng: 46.6753 };
 
@@ -42,6 +43,7 @@ export function NearMeLocator() {
   const [distance, setDistance] = useState('10');
   const [keyword, setKeyword] = useState('');
   const { status, coords, error, refresh } = useGeolocation();
+  useDocumentTitle('المعدات بالقرب مني');
 
   const origin = coords ?? { lat: RIYADH_FALLBACK.lat, lng: RIYADH_FALLBACK.lng };
 

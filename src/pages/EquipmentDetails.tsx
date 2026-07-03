@@ -33,6 +33,7 @@ import {
 'lucide-react';
 import { getEquipmentById, getCompanyById } from '../data/repository';
 import { useFavorites } from '../hooks/useFavorites';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function EquipmentDetails() {
   const { id } = useParams<{id: string;}>();
@@ -42,6 +43,7 @@ export function EquipmentDetails() {
 
   const equipment = id ? getEquipmentById(id) : undefined;
   const company = equipment ? getCompanyById(equipment.companyId) : undefined;
+  useDocumentTitle(equipment?.title || 'تفاصيل المعدة');
 
   if (!equipment) {
     return (
@@ -137,6 +139,8 @@ export function EquipmentDetails() {
 
             <Card shadow="sm" padding="0" radius="md" withBorder mb="xl">
               <Box
+                role="img"
+                aria-label={equipment.title}
                 h={{
                   base: 300,
                   md: 450
@@ -193,7 +197,7 @@ export function EquipmentDetails() {
                   </Title>
                 </Box>
                 <Group gap="sm">
-                  <Button variant="default" radius="md" px="xs" onClick={handleShare}>
+                  <Button variant="default" radius="md" px="xs" aria-label="مشاركة" onClick={handleShare}>
                     <Share2Icon size={18} />
                   </Button>
                   <Button
@@ -201,6 +205,7 @@ export function EquipmentDetails() {
                     radius="md"
                     px="xs"
                     color={favorite ? 'red' : 'gray'}
+                    aria-label={favorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}
                     onClick={() => toggleFavorite(equipment.id)}>
 
                     <HeartIcon size={18} color={favorite ? '#E03131' : undefined} fill={favorite ? 'currentColor' : 'none'} />

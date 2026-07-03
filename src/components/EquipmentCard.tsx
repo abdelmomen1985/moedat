@@ -69,6 +69,8 @@ export function EquipmentCard({
       <Card.Section relative>
         <Box
           h={200}
+          role="img"
+          aria-label={title}
           bg={
           image ?
           undefined :
@@ -104,6 +106,7 @@ export function EquipmentCard({
           color={favorite ? 'red' : 'gray'}
           radius="xl"
           size="lg"
+          aria-label={favorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}
           onClick={(e) => {
             e.stopPropagation();
             toggleFavorite(id);

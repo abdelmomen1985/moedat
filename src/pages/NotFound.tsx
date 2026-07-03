@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Container, Title, Text, Button } from '@mantine/core';
 import { HomeIcon } from 'lucide-react';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function NotFound() {
+  useDocumentTitle('الصفحة غير موجودة');
   return (
     <Box style={{ flex: 1 }} bg="#F8F9FA" py={100}>
       <Container size="xl" ta="center">

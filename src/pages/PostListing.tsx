@@ -22,8 +22,10 @@ import { useForm } from '@mantine/form';
 import { useAuth } from '../context/AuthContext';
 import { getRegions, getCitiesByRegion } from '../data/cities';
 import { addUserListing, getOrCreateCompanyForUser } from '../data/repository';
+import { generateId } from '../utils/id';
 import { resizeImageFile, ImageTooLargeError } from '../utils/imageResize';
 import type { Equipment, EquipmentCategory, EquipmentCondition, ServiceType } from '../data/types';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 interface ListingFormValues {
   title: string;
@@ -67,6 +69,7 @@ export function PostListing() {
       description: (value) => value.trim().length >= 10 ? null : 'الوصف يجب أن يكون 10 أحرف على الأقل'
     }
   });
+  useDocumentTitle('إضافة إعلان');
 
   if (!isAuthenticated || !user) {
     return (
@@ -136,7 +139,7 @@ export function PostListing() {
     const company = getOrCreateCompanyForUser(user);
     const cityInfo = getCitiesByRegion(values.region).find((c) => c.city === values.city);
     const equipment: Equipment = {
-      id: `eq-${crypto.randomUUID()}`,
+      id: `eq-${generateId()}`,
       title: values.title,
       category: values.category as EquipmentCategory,
       serviceType: values.serviceType as ServiceType,
